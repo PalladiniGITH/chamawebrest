@@ -10,11 +10,41 @@ services:
     environment:
       API_URL: http://gateway
     depends_on:
-      - api
+      - chamados
+      - tickets
+      - actions
+      - stats
       - db
       - gateway
 
-  api:
+  chamados:
+    build: .
+    volumes:
+      - .:/var/www/html
+    expose:
+      - "80"
+    depends_on:
+      - db
+
+  tickets:
+    build: .
+    volumes:
+      - .:/var/www/html
+    expose:
+      - "80"
+    depends_on:
+      - db
+
+  actions:
+    build: .
+    volumes:
+      - .:/var/www/html
+    expose:
+      - "80"
+    depends_on:
+      - db
+
+  stats:
     build: .
     volumes:
       - .:/var/www/html
@@ -31,7 +61,10 @@ services:
       - "80:80"
     depends_on:
       - admin
-      - api
+      - chamados
+      - tickets
+      - actions
+      - stats
 
   db:
     image: mysql:5.7

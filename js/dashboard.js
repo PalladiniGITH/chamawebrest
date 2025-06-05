@@ -4,6 +4,8 @@
  */
 
 document.addEventListener('DOMContentLoaded', function() {
+    const metaApi = document.querySelector('meta[name="api-base-url"]');
+    const API_BASE_URL = metaApi ? metaApi.content : '';
     // Instanciar contador para auto-refresh
     let autoRefreshTimer = null;
     let autoRefreshInterval = 60000; // 60 segundos
@@ -155,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (teamSelect) params.append('team_id', teamSelect.value);
         
         // Fazer a requisição
-        fetch(`api_tickets.php?${params.toString()}`)
+        fetch(`${API_BASE_URL}/api_tickets.php?${params.toString()}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Erro na resposta: ' + response.status);
