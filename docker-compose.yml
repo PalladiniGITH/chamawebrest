@@ -1,8 +1,6 @@
 services:
   admin:
     build: .
-    ports:
-      - "8080:80"
     volumes:
       - .:/var/www/html
     environment:
@@ -12,6 +10,47 @@ services:
       - tickets
       - actions
       - stats
+      - db
+
+  dashboard:
+    build: .
+    volumes:
+      - .:/var/www/html
+    expose:
+      - "80"
+    environment:
+      API_URL: http://gateway
+    depends_on:
+      - chamados
+      - tickets
+      - actions
+      - stats
+      - db
+
+  criar:
+    build: .
+    volumes:
+      - .:/var/www/html
+    expose:
+      - "80"
+    environment:
+      API_URL: http://gateway
+    depends_on:
+      - chamados
+      - tickets
+      - actions
+      - stats
+      - db
+
+  login:
+    build: .
+    volumes:
+      - .:/var/www/html
+    expose:
+      - "80"
+    environment:
+      API_URL: http://gateway
+    depends_on:
       - db
 
   chamados:
@@ -57,6 +96,9 @@ services:
     ports:
       - "80:80"
     depends_on:
+      - login
+      - dashboard
+      - criar
       - admin
       - chamados
       - tickets
