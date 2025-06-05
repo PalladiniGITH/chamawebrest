@@ -1,12 +1,24 @@
 version: '3.8'
 
 services:
-  web:
+  admin:
     build: .
     ports:
       - "8080:80"
     volumes:
       - .:/var/www/html
+    environment:
+      API_URL: http://api
+    depends_on:
+      - api
+      - db
+
+  api:
+    build: .
+    volumes:
+      - .:/var/www/html
+    expose:
+      - "80"
     depends_on:
       - db
 

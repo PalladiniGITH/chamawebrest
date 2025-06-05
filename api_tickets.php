@@ -18,8 +18,9 @@ $headers = [
     "Authorization: Bearer " . API_TOKEN
 ];
 
+require_once 'inc/config.php';
 // Construir URL base da API
-$apiUrl = 'http://localhost:8080/api_chamados_rest.php';
+$apiUrl = rtrim(API_BASE_URL, '/') . '/api_chamados_rest.php';
 
 // Montar query string com filtros
 $queryParams = [];

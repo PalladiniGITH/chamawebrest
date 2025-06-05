@@ -5,6 +5,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 require_once 'auth_token.php';
+require_once 'inc/config.php';
 
 // Verifica se o usuário está logado
 if (!isset($_SESSION['user_id'])) {
@@ -15,8 +16,7 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $role    = $_SESSION['role'];
 
-// Chamada à API
-$apiUrl = 'http://localhost:8080/api_chamados_rest.php';
+$apiUrl = rtrim(API_BASE_URL, '/') . '/api_chamados_rest.php';
 $ch = curl_init($apiUrl);
 
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -47,6 +47,7 @@ if ($role !== 'usuario') {
   <link rel="stylesheet" href="css/animations.css" />
   <link rel="stylesheet" href="css/enhanced.css" />
   <link rel="stylesheet" href="css/theme.css" />
+  <meta name="api-base-url" content="<?php echo API_BASE_URL; ?>">
 </head>
 <body>
 <header>

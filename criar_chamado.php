@@ -56,7 +56,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'assigned_team_id' => !empty($assigned_team) ? $assigned_team : null
     ];
 
-    $ch = curl_init('http://localhost/api_chamados_rest.php');
+    require_once 'inc/config.php';
+    $apiEndpoint = rtrim(API_BASE_URL, '/') . '/api_chamados_rest.php';
+    $ch = curl_init($apiEndpoint);
     curl_setopt($ch, CURLOPT_VERBOSE, true); // Para debugar
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_POST, true);

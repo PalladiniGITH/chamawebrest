@@ -1,4 +1,5 @@
 // Script principal para o Portal de Chamados
+const API_BASE_URL = document.querySelector('meta[name="api-base-url"]').content;
 document.addEventListener('DOMContentLoaded', function() {
     console.log("JS carregado!");
     
@@ -55,7 +56,7 @@ function setupDashboardFeatures() {
         if (pesquisaInput) params.append('pesquisa', pesquisaInput.value);
         if (teamSelect) params.append('team_id', teamSelect.value);
 
-        fetch('api_chamados_rest.php?' + params.toString(), {
+        fetch(API_BASE_URL + '/api_chamados_rest.php?' + params.toString(), {
             headers: {
                 'Authorization': 'Bearer admin123'
             }
