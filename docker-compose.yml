@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   admin:
     build: .
@@ -15,7 +13,6 @@ services:
       - actions
       - stats
       - db
-      - gateway
 
   chamados:
     build: .
