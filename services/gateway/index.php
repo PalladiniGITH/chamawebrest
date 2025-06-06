@@ -18,6 +18,10 @@ if ($requestUri === '/' || $requestUri === '') {
     return;
 }
 
+// Log simples para verificar o encaminhamento das rotas
+$log = sprintf("[%s] %s %s -> %s\n", date('c'), $method, $requestUri, isset($service) ? $service : 'N/A');
+file_put_contents('php://stdout', $log, FILE_APPEND);
+
 $options = [
     'http' => [
         'method' => $method,
