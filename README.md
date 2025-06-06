@@ -44,7 +44,7 @@ Cada requisição gera uma linha de log indicando o método, a rota recebida e o
 
 ## Segurança e Manutenção
 
-O login tradicional utiliza autenticação em duas etapas. Após informar usuário e senha, um código OTP é enviado por e-mail e deve ser confirmado em `otp_verify.php`.
+O projeto suporta login local ou via Amazon Cognito (arquivos `cognito_login.php` e `auth_callback.php`).
 
 Um script `backup_db.sh` está disponível para gerar backups da base MySQL. Você pode agendar sua execução diária via cron. Há também o utilitário `sla_monitor.php` que dispara notificações antes do vencimento do SLA dos chamados.
 

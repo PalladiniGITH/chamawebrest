@@ -2,7 +2,6 @@
 session_start();
 require_once 'inc/connect.php';
 require_once 'shared/log.php';
-require_once 'shared/notify.php';
 
 $email = strtolower(trim($_POST['email'] ?? ''));
 $senha = $_POST['senha'] ?? '';
@@ -22,14 +21,12 @@ try {
             $senha_valida = true;
         }
         if ($senha_valida) {
-            // Gerar OTP e enviar
-            $otp = random_int(100000, 999999);
-            $_SESSION['pending_user_id'] = $user['id'];
-            $_SESSION['otp_code'] = password_hash($otp, PASSWORD_DEFAULT);
-            $_SESSION['otp_expires'] = time() + 300; // 5 minutos
-            enviarNotificacao($user['id'], 'Código de acesso', "Seu código OTP é: $otp");
-            registrarLog($pdo, 'LOGIN', 'Senha correta - aguardando OTP', $user['id']);
-            header('Location: otp_verify.php');
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['role']    = $user['role'];
+            $_SESSION['nome']    = $user['nome'];
+
+            registrarLog($pdo, 'LOGIN', 'Login local', $user['id']);
+            header('Location: dashboard.php');
             exit;
         } else {
             registrarLog($pdo, 'ERRO_LOGIN', 'Senha incorreta', $user['id']);
