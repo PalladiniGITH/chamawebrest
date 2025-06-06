@@ -15,8 +15,8 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $role    = $_SESSION['role'];
 
-// Chamada à API
-$apiUrl = 'http://localhost:8080/api_chamados_rest.php';
+// Chamada à API via gateway
+$apiUrl = 'http://gateway:80/tickets';
 $ch = curl_init($apiUrl);
 
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

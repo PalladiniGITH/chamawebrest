@@ -56,7 +56,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'assigned_team_id' => !empty($assigned_team) ? $assigned_team : null
     ];
 
-    $ch = curl_init('http://localhost/api_chamados_rest.php');
+    // Envia para o microserviço de tickets através do gateway
+    $ch = curl_init('http://gateway:80/tickets');
     curl_setopt($ch, CURLOPT_VERBOSE, true); // Para debugar
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_POST, true);
