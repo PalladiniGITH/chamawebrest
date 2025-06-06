@@ -12,11 +12,12 @@ if (isset($_POST['email'])) {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user) {
-        // Exemplo grosseiro: redefinir senha direto p/ "1234"
-        // Em real, geramos token, enviamos link com esse token, etc.
-        $stmtUpd = $pdo->prepare("UPDATE users SET senha='1234' WHERE id=:id");
-        $stmtUpd->execute(['id'=>$user['id']]);
-        echo "Senha redefinida para '1234'. <a href='index.html'>Fazer login</a>";
+        // Exemplo simplificado: redefinir senha para "1234" (hash)
+        // Em produção, gere token e envie e-mail com link
+        $novaSenhaHash = hash('sha256', '1234');
+        $stmtUpd = $pdo->prepare("UPDATE users SET senha=:s WHERE id=:id");
+        $stmtUpd->execute(['s'=>$novaSenhaHash, 'id'=>$user['id']]);
+        echo "Senha redefinida. <a href='index.html'>Fazer login</a>";
         exit;
     } else {
         echo "E-mail não encontrado. <a href='reset_password.php'>Tentar novamente</a>";

@@ -18,8 +18,8 @@ $headers = [
     "Authorization: Bearer " . API_TOKEN
 ];
 
-// Construir URL base da API
-$apiUrl = 'http://localhost:8080/api_chamados_rest.php';
+// Construir URL base da API via gateway
+$apiUrl = 'http://gateway:80/tickets';
 
 // Montar query string com filtros
 $queryParams = [];
