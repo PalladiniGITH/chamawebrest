@@ -9,7 +9,9 @@ services:
       - gateway
 
   gateway:
-    build: ./services/gateway
+    build:
+      context: .
+      dockerfile: services/gateway/Dockerfile
     ports:
       - "8081:80"
     depends_on:
@@ -17,12 +19,16 @@ services:
       - stats
 
   tickets:
-    build: ./services/tickets
+    build:
+      context: .
+      dockerfile: services/tickets/Dockerfile
     depends_on:
       - db
 
   stats:
-    build: ./services/stats
+    build:
+      context: .
+      dockerfile: services/stats/Dockerfile
     depends_on:
       - db
 
