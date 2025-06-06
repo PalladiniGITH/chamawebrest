@@ -8,6 +8,7 @@ Este projeto demonstra uma arquitetura simples de microserviços em PHP. Os serv
 - **tickets**: responsável pelo gerenciamento de chamados.
 - **stats**: fornece estatísticas gerais dos chamados.
 - **db**: banco de dados MySQL compartilhado entre os serviços.
+- **shared/connect.php**: script único de conexão ao banco utilizado pelos serviços.
 
 ## Executando
 
