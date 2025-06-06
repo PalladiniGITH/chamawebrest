@@ -11,7 +11,11 @@ Este projeto demonstra uma arquitetura simples de microserviços em PHP. Os serv
 
 ## Executando
 
-Utilize o `docker-compose` para subir todos os serviços:
+Utilize o `docker-compose` para subir todos os serviços. O script `script_sql.sql` 
+será executado automaticamente no primeiro start do banco, populando a tabela de
+exemplo com um usuário administrador.
+
+Credenciais padrão: `admin@sistema.com` / `admin123`.
 
 ```bash
 docker-compose up --build

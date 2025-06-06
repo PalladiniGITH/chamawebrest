@@ -12,7 +12,15 @@ try {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user) {
+        $senha_valida = false;
         if (password_verify($senha, $user['senha'])) {
+            $senha_valida = true;
+        }
+        // Permite senhas sem hash caso existam registros criados manualmente
+        if ($user['senha'] === $senha) {
+            $senha_valida = true;
+        }
+        if ($senha_valida) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['role'] = $user['role'];
             $_SESSION['nome'] = $user['nome'];
