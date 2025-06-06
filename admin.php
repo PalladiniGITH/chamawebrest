@@ -12,10 +12,11 @@ if (isset($_POST['acao']) && $_POST['acao'] === 'criar_usuario') {
     $nome  = $_POST['nome'] ?? '';
     $email = $_POST['email'] ?? '';
     $senha = $_POST['senha'] ?? '';
+    $senhaHash = hash('sha256', $senha);
     $role  = $_POST['role']  ?? 'usuario';
 
     $stmt = $pdo->prepare("INSERT INTO users (nome,email,senha,role) VALUES (:n,:e,:s,:r)");
-    $stmt->execute(['n'=>$nome, 'e'=>$email, 's'=>$senha, 'r'=>$role]);
+    $stmt->execute(['n'=>$nome, 'e'=>$email, 's'=>$senhaHash, 'r'=>$role]);
     
     // Mensagem de sucesso via sessão
     $_SESSION['admin_message'] = 'Usuário criado com sucesso!';

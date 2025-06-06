@@ -5,6 +5,7 @@ require_once 'shared/log.php';
 
 $email = strtolower(trim($_POST['email'] ?? ''));
 $senha = $_POST['senha'] ?? '';
+$senhaHash = hash('sha256', $senha);
 
 try {
     $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email AND auth_provider = 'local' AND blocked = 0 LIMIT 1");
@@ -13,14 +14,7 @@ try {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user) {
-        $senha_valida = false;
-        if (password_verify($senha, $user['senha'])) {
-            $senha_valida = true;
-        }
-        if ($user['senha'] === $senha) {
-            $senha_valida = true;
-        }
-        if ($senha_valida) {
+        if (hash_equals($user['senha'], $senhaHash)) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['role']    = $user['role'];
             $_SESSION['nome']    = $user['nome'];

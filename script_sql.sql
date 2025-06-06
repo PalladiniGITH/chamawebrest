@@ -110,7 +110,7 @@ CREATE TABLE IF NOT EXISTS logs (
 
 -- Cria usuário admin
 INSERT INTO users (nome,email,senha,role)
-VALUES ('Admin','admin@sistema.com', 'admin123','administrador');
+VALUES ('Admin','admin@sistema.com', SHA2('admin123',256),'administrador');
 
 -- Cria equipe de infraestrutura e desenvolvimento
 INSERT INTO teams (nome) VALUES ('Infraestrutura'),('Desenvolvimento');

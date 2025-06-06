@@ -41,11 +41,13 @@ $stmt->execute(['email' => $email]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$user) {
+    $senhaTemp = bin2hex(random_bytes(8));
+    $senhaHash = hash('sha256', $senhaTemp);
     $stmtNewUser = $pdo->prepare('INSERT INTO users (nome, email, senha, role) VALUES (:nome, :email, :senha, "usuario")');
     $stmtNewUser->execute([
         'nome' => $name,
         'email' => $email,
-        'senha' => bin2hex(random_bytes(8))
+        'senha' => $senhaHash
     ]);
     $stmt = $pdo->prepare('SELECT * FROM users WHERE email = :email');
     $stmt->execute(['email' => $email]);
