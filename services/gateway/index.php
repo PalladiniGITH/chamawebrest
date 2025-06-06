@@ -1,15 +1,21 @@
 <?php
-$requestUri = $_SERVER['REQUEST_URI'];
+$requestUri = strtok($_SERVER['REQUEST_URI'], '?');
 $method = $_SERVER['REQUEST_METHOD'];
 
-if (strpos($requestUri, '/tickets') === 0) {
+if ($requestUri === '/' || $requestUri === '') {
+    echo json_encode([
+        'message' => 'API Gateway',
+        'endpoints' => ['/tickets', '/stats']
+    ]);
+    return;
+} elseif (strpos($requestUri, '/tickets') === 0) {
     $service = 'http://tickets:80/index.php' . substr($requestUri, 8);
 } elseif (strpos($requestUri, '/stats') === 0) {
     $service = 'http://stats:80/index.php' . substr($requestUri, 6);
 } else {
     http_response_code(404);
     echo json_encode(['error' => 'Rota nao encontrada']);
-    exit;
+    return;
 }
 
 $options = [

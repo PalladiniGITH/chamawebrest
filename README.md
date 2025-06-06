@@ -18,3 +18,10 @@ docker-compose up --build
 ```
 
 O gateway ficará disponível em `http://localhost:8080` e fará a mediação das chamadas para os demais serviços.
+
+## Endpoints
+
+Ao acessar o endereço acima, você verá uma mensagem com os caminhos disponíveis.
+
+- `http://localhost:8080/tickets` - API de gerenciamento de chamados
+- `http://localhost:8080/stats` - API de estatísticas
