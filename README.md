@@ -1,1 +1,20 @@
 # chamawebrest
+
+Este projeto demonstra uma arquitetura simples de microserviços em PHP. Os serviços comunicam-se através de APIs REST e um API Gateway centraliza o acesso externo.
+
+## Serviços
+
+- **gateway**: expõe as rotas públicas e encaminha as requisições para os microserviços internos.
+- **tickets**: responsável pelo gerenciamento de chamados.
+- **stats**: fornece estatísticas gerais dos chamados.
+- **db**: banco de dados MySQL compartilhado entre os serviços.
+
+## Executando
+
+Utilize o `docker-compose` para subir todos os serviços:
+
+```bash
+docker-compose up --build
+```
+
+O gateway ficará disponível em `http://localhost:8080` e fará a mediação das chamadas para os demais serviços.

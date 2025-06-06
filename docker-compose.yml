@@ -1,12 +1,21 @@
 version: '3.8'
 
 services:
-  web:
-    build: .
+  gateway:
+    build: ./services/gateway
     ports:
       - "8080:80"
-    volumes:
-      - .:/var/www/html
+    depends_on:
+      - tickets
+      - stats
+
+  tickets:
+    build: ./services/tickets
+    depends_on:
+      - db
+
+  stats:
+    build: ./services/stats
     depends_on:
       - db
 

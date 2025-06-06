@@ -1,0 +1,35 @@
+<?php
+$requestUri = $_SERVER['REQUEST_URI'];
+$method = $_SERVER['REQUEST_METHOD'];
+
+if (strpos($requestUri, '/tickets') === 0) {
+    $service = 'http://tickets:80/index.php' . substr($requestUri, 8);
+} elseif (strpos($requestUri, '/stats') === 0) {
+    $service = 'http://stats:80/index.php' . substr($requestUri, 6);
+} else {
+    http_response_code(404);
+    echo json_encode(['error' => 'Rota nao encontrada']);
+    exit;
+}
+
+$options = [
+    'http' => [
+        'method' => $method,
+        'header' => '',
+        'content' => file_get_contents('php://input'),
+    ]
+];
+foreach (getallheaders() as $name => $value) {
+    if ($name === 'Host') continue;
+    $options['http']['header'] .= "$name: $value\r\n";
+}
+$context = stream_context_create($options);
+$response = file_get_contents($service . (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING'] ? '?' . $_SERVER['QUERY_STRING'] : ''), false, $context);
+
+$httpCode = 500;
+if (isset($http_response_header[0]) && preg_match('#HTTP/\d+\.\d+\s+(\d+)#', $http_response_header[0], $matches)) {
+    $httpCode = (int)$matches[1];
+}
+http_response_code($httpCode);
+echo $response;
+?>
