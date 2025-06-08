@@ -49,3 +49,8 @@ O projeto suporta login local ou via Amazon Cognito (arquivos `cognito_login.php
 Um script `backup_db.sh` está disponível para gerar backups da base MySQL. Você pode agendar sua execução diária via cron. Há também o utilitário `sla_monitor.php` que dispara notificações antes do vencimento do SLA dos chamados.
 
 Todos os acessos e ações relevantes são registrados na tabela `logs` do banco de dados, permitindo auditoria completa.
+
+
+## Integracao continua
+
+Este repositorio inclui um `Jenkinsfile` com um pipeline basico. Ele faz o checkout do codigo, constroi as imagens com `docker-compose`, executa um teste simples e inicia os servicos para validacao.
