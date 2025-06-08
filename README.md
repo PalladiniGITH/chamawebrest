@@ -6,7 +6,7 @@ Este projeto demonstra uma arquitetura simples de microserviços em PHP. Os serv
 
 - **gateway**: expõe as rotas públicas e encaminha as requisições para os microserviços internos.
 - **tickets**: responsável pelo gerenciamento de chamados.
-- **stats**: fornece estatísticas gerais dos chamados.
+- **stats**: fornece estatísticas agregadas usadas na página de relatórios.
 - **db**: banco de dados MySQL compartilhado entre os serviços.
 - **shared/connect.php**: script único de conexão ao banco utilizado pelos serviços.
 
@@ -30,7 +30,7 @@ O API Gateway estará em `http://localhost:8081` e fará a mediação das chamad
 Ao acessar o endereço acima, você verá uma mensagem com os caminhos disponíveis.
 
 - `http://localhost:8081/tickets` - API de gerenciamento de chamados
-- `http://localhost:8081/stats` - API de estatísticas
+ - `http://localhost:8081/stats` - API de estatísticas para o relatório
 
 ## Verificando o gateway
 
