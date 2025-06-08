@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tickets
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tickets
+  template:
+    metadata:
+      labels:
+        app: tickets
+    spec:
+      containers:
+      - name: tickets
+        image: tickets:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        env:
+        - name: DB_HOST
+          value: db
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tickets
+spec:
+  selector:
+    app: tickets
+  ports:
+  - port: 80
+    targetPort: 80

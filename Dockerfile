@@ -25,3 +25,4 @@ RUN a2enmod rewrite
 # Instalar as dependências do Composer (se houver um composer.json)
 WORKDIR /var/www/html
 RUN if [ -f "composer.json" ]; then composer install --no-interaction; fi
+

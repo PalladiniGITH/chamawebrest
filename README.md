@@ -51,6 +51,16 @@ Um script `backup_db.sh` está disponível para gerar backups da base MySQL. Voc
 Todos os acessos e ações relevantes são registrados na tabela `logs` do banco de dados, permitindo auditoria completa.
 
 
+## Kubernetes
+
+Os manifestos em `k8s/` definem Deployments e Services para cada microserviço. Depois de construir as imagens Docker, aplique os arquivos:
+
+```bash
+kubectl apply -f k8s/
+```
+
+Isso criará as instâncias `gateway`, `tickets`, `stats`, `db` e `phpmyadmin`. O banco de dados será populado pelo script `script_sql.sql` via ConfigMap.
+
 ## Integracao continua
 
 Este repositorio inclui um `Jenkinsfile` com um pipeline basico. Ele faz o checkout do codigo, constroi as imagens com `docker-compose`, executa um teste simples e inicia os servicos para validacao.
