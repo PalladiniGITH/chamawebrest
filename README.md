@@ -94,6 +94,27 @@ kubectl port-forward service/gateway 8081:80
 ```
 Depois acesse `http://localhost:8080` para o portal web e `http://localhost:8081` para o gateway.
 
+### Jenkins no Kubernetes
+
+Um manifesto adicional em `k8s/jenkins-deployment.yaml` instala o Jenkins dentro do cluster. Ele expõe a porta `8080` na NodePort `30082`.
+
+```bash
+kubectl apply -f k8s/jenkins-deployment.yaml
+```
+
+Se estiver utilizando o Minikube, abra o endereço do serviço com:
+
+```bash
+minikube service jenkins
+```
+
+ou encaminhe manualmente:
+
+```bash
+kubectl port-forward service/jenkins 8082:8080
+```
+Então acesse `http://localhost:8082` para configurar o Jenkins.
+
 ## Integracao continua
 
 Este repositorio inclui um `Jenkinsfile` com um pipeline basico. Ele faz o checkout do codigo, constroi as imagens com `docker-compose`, executa um teste simples e inicia os servicos para validacao.
