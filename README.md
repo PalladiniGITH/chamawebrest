@@ -53,14 +53,33 @@ Todos os acessos e ações relevantes são registrados na tabela `logs` do banco
 
 ## Kubernetes
 
-Os manifestos em `k8s/` definem Deployments e Services para cada microserviço. Depois de construir as imagens Docker, aplique os arquivos:
+Os manifestos em `k8s/` definem Deployments e Services para cada microserviço.
+Antes de aplicar, crie as imagens com as tags esperadas:
+
+```bash
+docker build -t web:latest -f Dockerfile .
+docker build -t gateway:latest -f services/gateway/Dockerfile .
+docker build -t tickets:latest -f services/tickets/Dockerfile .
+docker build -t stats:latest -f services/stats/Dockerfile .
+```
+
+Se estiver utilizando o Minikube, carregue-as no cluster:
+
+```bash
+minikube image load web:latest
+minikube image load gateway:latest
+minikube image load tickets:latest
+minikube image load stats:latest
+```
+
+Em seguida aplique os arquivos:
 
 ```bash
 kubectl apply -f k8s/
 ```
 
 Isso criará as instâncias `web`, `gateway`, `tickets`, `stats`, `db` e `phpmyadmin`. O banco de dados será populado pelo script `script_sql.sql` via ConfigMap.
-O portal web e o gateway são expostos via NodePort. Para descobrir os endereços no Minikube, execute:
+O portal web e o gateway são expostos via NodePort (`30080` e `30081`). Para descobrir os endereços no Minikube, execute:
 
 ```bash
 minikube service web
