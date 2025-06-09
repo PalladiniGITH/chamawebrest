@@ -60,19 +60,20 @@ kubectl apply -f k8s/
 ```
 
 Isso criará as instâncias `web`, `gateway`, `tickets`, `stats`, `db` e `phpmyadmin`. O banco de dados será populado pelo script `script_sql.sql` via ConfigMap.
-O portal web é exposto via NodePort. Para descobrir o endereço no Minikube, execute:
+O portal web e o gateway são expostos via NodePort. Para descobrir os endereços no Minikube, execute:
 
 ```bash
 minikube service web
+minikube service gateway
 ```
 
 Ou encaminhe a porta manualmente:
 
 ```bash
 kubectl port-forward service/web 8080:80
+kubectl port-forward service/gateway 8081:80
 ```
-
-Depois acesse `http://localhost:8080`.
+Depois acesse `http://localhost:8080` para o portal web e `http://localhost:8081` para o gateway.
 
 ## Integracao continua
 
