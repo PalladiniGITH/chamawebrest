@@ -59,7 +59,20 @@ Os manifestos em `k8s/` definem Deployments e Services para cada microserviço. 
 kubectl apply -f k8s/
 ```
 
-Isso criará as instâncias `gateway`, `tickets`, `stats`, `db` e `phpmyadmin`. O banco de dados será populado pelo script `script_sql.sql` via ConfigMap.
+Isso criará as instâncias `web`, `gateway`, `tickets`, `stats`, `db` e `phpmyadmin`. O banco de dados será populado pelo script `script_sql.sql` via ConfigMap.
+O portal web é exposto via NodePort. Para descobrir o endereço no Minikube, execute:
+
+```bash
+minikube service web
+```
+
+Ou encaminhe a porta manualmente:
+
+```bash
+kubectl port-forward service/web 8080:80
+```
+
+Depois acesse `http://localhost:8080`.
 
 ## Integracao continua
 
