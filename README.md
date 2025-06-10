@@ -8,6 +8,7 @@ Este projeto demonstra uma arquitetura simples de microserviços em PHP. Os serv
 - **tickets**: responsável pelo gerenciamento de chamados.
 - **stats**: fornece estatísticas agregadas usadas na página de relatórios.
 - **db**: banco de dados MySQL compartilhado entre os serviços.
+- **nginx**: proxy reverso com HTTPS que expõe o portal e o gateway.
 - **shared/connect.php**: script único de conexão ao banco utilizado pelos serviços.
 
 ## Executando
@@ -24,13 +25,17 @@ docker-compose up --build
 
 O portal web pode ser acessado em `http://localhost:8080`.
 O API Gateway estará em `http://localhost:8081` e fará a mediação das chamadas para os demais serviços.
+Para acesso seguro via HTTPS, um contêiner Nginx é iniciado
+automaticamente. Ele expõe o portal e o gateway em `https://localhost:8443`
+(certificado autoassinado).
 
 ## Endpoints
 
 Ao acessar o endereço acima, você verá uma mensagem com os caminhos disponíveis.
 
 - `http://localhost:8081/tickets` - API de gerenciamento de chamados
- - `http://localhost:8081/stats` - API de estatísticas para o relatório
+- `http://localhost:8081/stats` - API de estatísticas para o relatório
+  (também acessíveis via HTTPS em `https://localhost:8443/api/...`)
 
 ## Verificando o gateway
 

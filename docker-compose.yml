@@ -59,5 +59,13 @@ services:
       PMA_HOST: db
       MYSQL_ROOT_PASSWORD: root
 
+  nginx:
+    build: ./nginx
+    ports:
+      - "8443:443"
+    depends_on:
+      - web
+      - gateway
+
 volumes:
   db_data:
