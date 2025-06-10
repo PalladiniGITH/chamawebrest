@@ -61,6 +61,7 @@ services:
 
   nginx:
     build: ./nginx
+    image: nginx-proxy:latest
     ports:
       - "8443:443"
     depends_on:

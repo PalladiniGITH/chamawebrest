@@ -66,6 +66,7 @@ docker build -t web:latest -f Dockerfile .
 docker build -t gateway:latest -f services/gateway/Dockerfile .
 docker build -t tickets:latest -f services/tickets/Dockerfile .
 docker build -t stats:latest -f services/stats/Dockerfile .
+docker build -t nginx-proxy:latest -f nginx/Dockerfile nginx/
 # ou simplesmente
 docker-compose build
 ```
@@ -77,6 +78,7 @@ minikube image load web:latest
 minikube image load gateway:latest
 minikube image load tickets:latest
 minikube image load stats:latest
+minikube image load nginx-proxy:latest
 ```
 
 Em seguida aplique os arquivos:
@@ -85,12 +87,13 @@ Em seguida aplique os arquivos:
 kubectl apply -f k8s/
 ```
 
-Isso criará as instâncias `web`, `gateway`, `tickets`, `stats`, `db` e `phpmyadmin`. O banco de dados será populado pelo script `script_sql.sql` via ConfigMap.
-O portal web e o gateway são expostos via NodePort (`30080` e `30081`). Para descobrir os endereços no Minikube, execute:
+Isso criará as instâncias `web`, `gateway`, `tickets`, `stats`, `db`, `phpmyadmin` e `nginx-proxy`. O banco de dados será populado pelo script `script_sql.sql` via ConfigMap.
+O portal web e o gateway são expostos via NodePort (`30080` e `30081`), e o proxy HTTPS em `30443`. Para descobrir os endereços no Minikube, execute:
 
 ```bash
 minikube service web
 minikube service gateway
+minikube service nginx-proxy
 ```
 
 Ou encaminhe a porta manualmente:
@@ -98,6 +101,7 @@ Ou encaminhe a porta manualmente:
 ```bash
 kubectl port-forward service/web 8080:80
 kubectl port-forward service/gateway 8081:80
+kubectl port-forward service/nginx-proxy 8443:443
 ```
 Depois acesse `http://localhost:8080` para o portal web e `http://localhost:8081` para o gateway.
 
