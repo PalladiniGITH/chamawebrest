@@ -117,4 +117,4 @@ Então acesse `http://localhost:8082` para configurar o Jenkins.
 
 ## Integracao continua
 
-Este repositorio inclui um `Jenkinsfile` com um pipeline basico. Ele faz o checkout do codigo, constroi as imagens com `docker-compose`, executa um teste simples e inicia os servicos para validacao.
+O `Jenkinsfile` define um pipeline que constrói as imagens Docker individuais, carrega-as no Minikube e então aplica os manifestos em `k8s/` para implantação. Um teste simples roda o PHP dentro da imagem `web` antes do deploy.
