@@ -34,6 +34,7 @@ automaticamente. Ele expõe o portal e o gateway em `https://localhost:8443`
 para redirecionar para HTTPS. Se você enviar uma requisição HTTP diretamente
 para a porta 8443 o resultado será "400 Bad Request" porque essa porta aceita
 somente HTTPS.
+Observe que o certificado é autoassinado. O navegador exibirá um aviso de "conexão não segura". Aceite o risco ou adicione uma exceção para prosseguir nos testes locais.
 
 ## Endpoints
 
