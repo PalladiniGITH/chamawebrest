@@ -31,11 +31,12 @@ automaticamente. Ele expõe o portal e o gateway em `https://localhost:8443`
 
 ## Endpoints
 
-Ao acessar o endereço acima, você verá uma mensagem com os caminhos disponíveis.
+ Ao acessar o endereço acima, você verá uma mensagem com os caminhos disponíveis.
 
-- `http://localhost:8081/tickets` - API de gerenciamento de chamados
-- `http://localhost:8081/stats` - API de estatísticas para o relatório
-  (também acessíveis via HTTPS em `https://localhost:8443/api/...`)
+ - `http://localhost:8081/tickets` - API de gerenciamento de chamados
+ - `http://localhost:8081/stats` - API de estatísticas para o relatório
+   (também acessíveis via HTTPS em `https://localhost:8443/api/...`)
+ - `api/create_ticket.php` - endpoint usado pela página de abertura de chamados
 
 ## Verificando o gateway
 
