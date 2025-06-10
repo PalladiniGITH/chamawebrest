@@ -111,6 +111,12 @@ docker build -t jenkins-with-tools:latest -f jenkins/Dockerfile jenkins/
 Em seguida carregue-a no Minikube (ou publique em um registry acessível) e aplique o manifesto:
 
 ```bash
+minikube image load jenkins-with-tools:latest
+```
+
+Depois aplique o manifesto:
+
+```bash
 kubectl apply -f k8s/jenkins-deployment.yaml
 ```
 
@@ -120,7 +126,8 @@ Se estiver utilizando o Minikube, abra o endereço do serviço com:
 minikube service jenkins
 ```
 
-ou encaminhe manualmente:
+A porta usada é o NodePort `30082`. Se preferir acessar manualmente,
+execute:
 
 ```bash
 kubectl port-forward service/jenkins 8082:8080
