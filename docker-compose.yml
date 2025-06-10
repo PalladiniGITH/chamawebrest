@@ -64,6 +64,7 @@ services:
     image: nginx-proxy:latest
     ports:
       - "8443:443"
+      - "8084:80"
     depends_on:
       - web
       - gateway

@@ -30,8 +30,10 @@ O portal web pode ser acessado em `http://localhost:8080`.
 O API Gateway estará em `http://localhost:8081` e fará a mediação das chamadas para os demais serviços.
 Para acesso seguro via HTTPS, um contêiner Nginx é iniciado
 automaticamente. Ele expõe o portal e o gateway em `https://localhost:8443`
-(certificado autoassinado). Se você acessar `http://localhost:8443` verá um
-erro "400 Bad Request" porque essa porta aceita apenas HTTPS.
+(certificado autoassinado) e também atende em `http://localhost:8084` apenas
+para redirecionar para HTTPS. Se você enviar uma requisição HTTP diretamente
+para a porta 8443 o resultado será "400 Bad Request" porque essa porta aceita
+somente HTTPS.
 
 ## Endpoints
 
@@ -93,7 +95,7 @@ kubectl apply -f k8s/
 ```
 
 Isso criará as instâncias `web`, `gateway`, `tickets`, `stats`, `db`, `phpmyadmin` e `nginx-proxy`. O banco de dados será populado pelo script `script_sql.sql` via ConfigMap.
-O portal web e o gateway são expostos via NodePort (`30080` e `30081`), e o proxy HTTPS em `30443`. Para descobrir os endereços no Minikube, execute:
+O portal web e o gateway são expostos via NodePort (`30080` e `30081`), enquanto o proxy oferece HTTP em `30480` (redirecionando) e HTTPS em `30443`. Para descobrir os endereços no Minikube, execute:
 
 ```bash
 minikube service web
@@ -101,14 +103,18 @@ minikube service gateway
 minikube service nginx-proxy
 ```
 
+O `minikube service` sempre imprime um URL começando com `http://`. Para o proxy,
+substitua manualmente por `https://` se estiver usando a porta 30443.
+
 Ou encaminhe a porta manualmente:
 
 ```bash
 kubectl port-forward service/web 8080:80
 kubectl port-forward service/gateway 8081:80
 kubectl port-forward service/nginx-proxy 8443:443
+kubectl port-forward service/nginx-proxy 8084:80
 ```
-Depois acesse `http://localhost:8080` para o portal web e `http://localhost:8081` para o gateway.
+Depois acesse `http://localhost:8080` para o portal web, `http://localhost:8081` para o gateway ou `https://localhost:8443` através do proxy (HTTP em `http://localhost:8084` será redirecionado).
 
 Se algum pod ficar em `ImagePullBackOff`, verifique se as imagens estão disponíveis no Minikube com `minikube image ls`. Os manifestos definem `imagePullPolicy: Never` justamente para usar as imagens locais. Caso faltem, execute novamente `docker-compose build` e `minikube image load <nome>:latest` para cada serviço.
 
