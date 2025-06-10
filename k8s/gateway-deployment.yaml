@@ -15,7 +15,9 @@ spec:
       containers:
       - name: gateway
         image: gateway:latest
-        imagePullPolicy: IfNotPresent
+        # Usamos imagens locais carregadas no Minikube, então evitamos que o
+        # Kubernetes tente fazer pull de um registry externo.
+        imagePullPolicy: Never
         ports:
         - containerPort: 80
 ---

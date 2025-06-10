@@ -15,7 +15,9 @@ spec:
       containers:
       - name: tickets
         image: tickets:latest
-        imagePullPolicy: IfNotPresent
+        # Usamos imagens locais carregadas no Minikube, portanto evitamos
+        # que o cluster tente puxá-las de um registry remoto.
+        imagePullPolicy: Never
         ports:
         - containerPort: 80
         env:

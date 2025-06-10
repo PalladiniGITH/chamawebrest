@@ -96,7 +96,7 @@ kubectl port-forward service/gateway 8081:80
 ```
 Depois acesse `http://localhost:8080` para o portal web e `http://localhost:8081` para o gateway.
 
-Se algum pod ficar em `ImagePullBackOff`, verifique se as imagens estão disponíveis no Minikube com `minikube image ls`. Caso faltem, execute novamente `docker-compose build` e `minikube image load <nome>:latest` para cada serviço.
+Se algum pod ficar em `ImagePullBackOff`, verifique se as imagens estão disponíveis no Minikube com `minikube image ls`. Os manifestos definem `imagePullPolicy: Never` justamente para usar as imagens locais. Caso faltem, execute novamente `docker-compose build` e `minikube image load <nome>:latest` para cada serviço.
 
 ### Jenkins no Kubernetes
 

@@ -15,7 +15,9 @@ spec:
       containers:
       - name: web
         image: web:latest
-        imagePullPolicy: IfNotPresent
+        # Como a imagem é carregada manualmente no cluster local, evitamos a
+        # tentativa de pull externo.
+        imagePullPolicy: Never
         ports:
         - containerPort: 80
 ---

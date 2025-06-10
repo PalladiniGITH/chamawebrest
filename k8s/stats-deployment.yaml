@@ -15,7 +15,9 @@ spec:
       containers:
       - name: stats
         image: stats:latest
-        imagePullPolicy: IfNotPresent
+        # Utilizamos imagens locais carregadas manualmente; não há necessidade
+        # de o Kubernetes tentar buscá-las em um registry externo.
+        imagePullPolicy: Never
         ports:
         - containerPort: 80
         env:
