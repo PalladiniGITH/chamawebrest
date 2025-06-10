@@ -14,16 +14,21 @@ spec:
     spec:
       containers:
       - name: jenkins
-        image: jenkins/jenkins:lts
+        image: jenkins-with-tools:latest
         ports:
         - containerPort: 8080
         - containerPort: 50000
         volumeMounts:
         - name: jenkins-home
           mountPath: /var/jenkins_home
+        - name: docker-sock
+          mountPath: /var/run/docker.sock
       volumes:
       - name: jenkins-home
         emptyDir: {}
+      - name: docker-sock
+        hostPath:
+          path: /var/run/docker.sock
 ---
 apiVersion: v1
 kind: Service

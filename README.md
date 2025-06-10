@@ -96,7 +96,15 @@ Depois acesse `http://localhost:8080` para o portal web e `http://localhost:8081
 
 ### Jenkins no Kubernetes
 
-Um manifesto adicional em `k8s/jenkins-deployment.yaml` instala o Jenkins dentro do cluster. Ele expõe a porta `8080` na NodePort `30082`.
+Um manifesto adicional em `k8s/jenkins-deployment.yaml` instala o Jenkins dentro do cluster. Ele usa a imagem `jenkins-with-tools`, que
+inclui `docker`, `kubectl` e `minikube` para que o pipeline possa construir e implantar os serviços.
+Antes de aplicar o manifesto, construa a imagem personalizada:
+
+```bash
+docker build -t jenkins-with-tools:latest -f jenkins/Dockerfile jenkins/
+```
+
+Em seguida carregue-a no Minikube (ou publique em um registry acessível) e aplique o manifesto:
 
 ```bash
 kubectl apply -f k8s/jenkins-deployment.yaml
