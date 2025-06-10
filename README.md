@@ -54,13 +54,15 @@ Todos os acessos e ações relevantes são registrados na tabela `logs` do banco
 ## Kubernetes
 
 Os manifestos em `k8s/` definem Deployments e Services para cada microserviço.
-Antes de aplicar, crie as imagens com as tags esperadas:
+Antes de aplicar, crie as imagens com as tags esperadas (o `docker-compose.yml` já define essas tags):
 
 ```bash
 docker build -t web:latest -f Dockerfile .
 docker build -t gateway:latest -f services/gateway/Dockerfile .
 docker build -t tickets:latest -f services/tickets/Dockerfile .
 docker build -t stats:latest -f services/stats/Dockerfile .
+# ou simplesmente
+docker-compose build
 ```
 
 Se estiver utilizando o Minikube, carregue-as no cluster:
@@ -93,6 +95,8 @@ kubectl port-forward service/web 8080:80
 kubectl port-forward service/gateway 8081:80
 ```
 Depois acesse `http://localhost:8080` para o portal web e `http://localhost:8081` para o gateway.
+
+Se algum pod ficar em `ImagePullBackOff`, verifique se as imagens estão disponíveis no Minikube com `minikube image ls`. Caso faltem, execute novamente `docker-compose build` e `minikube image load <nome>:latest` para cada serviço.
 
 ### Jenkins no Kubernetes
 

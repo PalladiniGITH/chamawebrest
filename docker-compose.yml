@@ -3,6 +3,7 @@ version: '3.8'
 services:
   web:
     build: .
+    image: web:latest
     ports:
       - "8080:80"
     depends_on:
@@ -12,6 +13,7 @@ services:
     build:
       context: .
       dockerfile: services/gateway/Dockerfile
+    image: gateway:latest
     ports:
       - "8081:80"
     depends_on:
@@ -22,6 +24,7 @@ services:
     build:
       context: .
       dockerfile: services/tickets/Dockerfile
+    image: tickets:latest
     depends_on:
       - db
 
@@ -29,6 +32,7 @@ services:
     build:
       context: .
       dockerfile: services/stats/Dockerfile
+    image: stats:latest
     depends_on:
       - db
 
