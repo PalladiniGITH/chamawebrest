@@ -30,7 +30,8 @@ O portal web pode ser acessado em `http://localhost:8080`.
 O API Gateway estará em `http://localhost:8081` e fará a mediação das chamadas para os demais serviços.
 Para acesso seguro via HTTPS, um contêiner Nginx é iniciado
 automaticamente. Ele expõe o portal e o gateway em `https://localhost:8443`
-(certificado autoassinado).
+(certificado autoassinado). Se você acessar `http://localhost:8443` verá um
+erro "400 Bad Request" porque essa porta aceita apenas HTTPS.
 
 ## Endpoints
 
