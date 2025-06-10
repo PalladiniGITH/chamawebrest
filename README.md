@@ -118,3 +118,6 @@ Então acesse `http://localhost:8082` para configurar o Jenkins.
 ## Integracao continua
 
 O `Jenkinsfile` define um pipeline que constrói as imagens Docker individuais, carrega-as no Minikube e então aplica os manifestos em `k8s/` para implantação. Um teste simples roda o PHP dentro da imagem `web` antes do deploy.
+
+Um segundo arquivo `Jenkinsfile.test` fornece um pipeline alternativo para avaliacao local. Ele utiliza `docker-compose` para compilar e iniciar os servicos, realiza um teste de conexao simples no gateway e finaliza os containers.
+
