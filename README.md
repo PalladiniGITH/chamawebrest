@@ -10,6 +10,7 @@ Este projeto demonstra uma arquitetura simples de microserviços em PHP. Os serv
 - **db**: banco de dados MySQL compartilhado entre os serviços.
 - **nginx**: proxy reverso com HTTPS que expõe o portal e o gateway.
 - **shared/connect.php**: script único de conexão ao banco utilizado pelos serviços.
+- **public/**: arquivos PHP e recursos estáticos do portal web.
 
 ## Executando
 
@@ -22,6 +23,8 @@ Credenciais padrão: `admin@sistema.com` / `admin123` (armazenada como hash SHA-
 ```bash
 docker-compose up --build
 ```
+
+O Apache do serviço **web** utiliza a pasta `public/` como DocumentRoot. Todas as páginas PHP e arquivos estáticos ficam nesse diretório.
 
 O portal web pode ser acessado em `http://localhost:8080`.
 O API Gateway estará em `http://localhost:8081` e fará a mediação das chamadas para os demais serviços.

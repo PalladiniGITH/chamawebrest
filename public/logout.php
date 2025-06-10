@@ -1,8 +1,8 @@
 <?php
 session_start();
-require_once 'vendor/autoload.php';
-require_once 'inc/connect.php';
-require_once 'shared/log.php';
+require_once '../vendor/autoload.php';
+require_once '../inc/connect.php';
+require_once '../shared/log.php';
 
 if (isset($_SESSION['user_id'])) {
     registrarLog($pdo, 'LOGOUT', 'Usuário saiu', $_SESSION['user_id']);

@@ -1,5 +1,8 @@
 FROM php:7.4-apache
 
+# Apache will servir os arquivos da pasta `public`
+ENV APACHE_DOCUMENT_ROOT /var/www/html/public
+
 # Instalar dependências do sistema necessárias
 RUN apt-get update && apt-get install -y \
     git \
@@ -25,4 +28,7 @@ RUN a2enmod rewrite
 # Instalar as dependências do Composer (se houver um composer.json)
 WORKDIR /var/www/html
 RUN if [ -f "composer.json" ]; then composer install --no-interaction; fi
+
+# Define o diretório de trabalho para servir os arquivos ao Apache
+WORKDIR /var/www/html/public
 

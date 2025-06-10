@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'inc/connect.php';
+require_once '../inc/connect.php';
 
 if (isset($_POST['email'])) {
     // Em produção, gerar token, guardar em tabela, enviar e-mail com link

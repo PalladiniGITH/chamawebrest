@@ -1,7 +1,7 @@
 <?php
 // Manter todo o PHP original
 session_start();
-require_once 'inc/connect.php';
+require_once '../inc/connect.php';
 
 // Função de registro de mudança de campo
 function registrarMudanca($pdo, $ticket_id, $user_id, $campo, $old, $new) {
