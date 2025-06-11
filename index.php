@@ -4,10 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portal de Chamados - Login</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/animations.css" />
-  <link rel="stylesheet" href="css/enhanced.css" />
-  <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/animations.css" />
+  <link rel="stylesheet" href="/css/enhanced.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
 </head>
 <body>
   <div class="login-container">
@@ -25,7 +25,7 @@
     <div class="login-forms">
       <!-- Form de login tradicional , esta incorreto -->
       <!--<form action="dashboard.php" method="POST" id="traditional-form" class="login-form active"> -->
-      <form action="login.php" method="POST" id="traditional-form" class="login-form active">
+      <form action="/login.php" method="POST" id="traditional-form" class="login-form active">
 
         <div class="form-field">
           <label for="email">E-mail</label>
@@ -53,7 +53,7 @@
           </ul>
         </div>
         
-        <a href="cognito_login.php" class="button-cognito">
+        <a href="/cognito_login.php" class="button-cognito">
           <span class="cognito-icon">
             <!-- Ícone simples AWS -->
             <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -68,7 +68,7 @@
     </div>
     
     <div class="login-footer">
-      <a href="reset_password.php" class="forget-link">Esqueci minha senha</a>
+      <a href="/reset_password.php" class="forget-link">Esqueci minha senha</a>
     </div>
   </div>
   
