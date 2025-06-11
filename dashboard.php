@@ -21,7 +21,7 @@ $ch = curl_init($apiUrl);
 
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_HTTPHEADER, [
-    'Authorization: Bearer ' . API_TOKEN
+    'Authorization: Bearer ' . ($_SESSION['jwt'] ?? '')
 ]);
 
 $response = curl_exec($ch);
@@ -46,7 +46,10 @@ if ($role !== 'usuario') {
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="/css/animations.css" />
   <link rel="stylesheet" href="/css/enhanced.css" />
-  <link rel="stylesheet" href="/css/theme.css" />
+<link rel="stylesheet" href="/css/theme.css" />
+  <script>
+    window.JWT_TOKEN = '<?php echo $_SESSION['jwt']; ?>';
+  </script>
 </head>
 <body>
 <header>
