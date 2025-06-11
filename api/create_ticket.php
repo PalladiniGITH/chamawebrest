@@ -1,7 +1,8 @@
 <?php
+// Proxy endpoint that forwards ticket creation to the ticket microservice via the gateway.
+// This keeps browser requests same-origin and allows session reuse.
 session_start();
-require_once '../auth_token.php';
-
+require_once "../auth_token.php";
 if (!isset($_SESSION['user_id'])) {
     http_response_code(401);
     echo json_encode(['error' => 'Não autorizado']);
