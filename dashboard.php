@@ -8,7 +8,7 @@ require_once 'auth_token.php';
 
 // Verifica se o usuário está logado
 if (!isset($_SESSION['user_id'])) {
-    header('Location: index.html');
+    header('Location: index.php');
     exit;
 }
 
@@ -43,10 +43,10 @@ if ($role !== 'usuario') {
 <head>
   <meta charset="UTF-8"/>
   <title>Portal de Chamados - Dashboard</title>
-  <link rel="stylesheet" href="/public/css/style.css" />
-  <link rel="stylesheet" href="/public/css/animations.css" />
-  <link rel="stylesheet" href="/public/css/enhanced.css" />
-  <link rel="stylesheet" href="/public/css/theme.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/animations.css" />
+  <link rel="stylesheet" href="/css/enhanced.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
 </head>
 <body>
 <header>
@@ -126,6 +126,6 @@ if ($role !== 'usuario') {
   <button id="theme-toggle" class="theme-toggle" title="Alternar tema claro/escuro">🌓</button>
 </div>
 
-<script src="/public/js/script.js"></script>
+<script src="/js/script.js"></script>
 </body>
 </html>

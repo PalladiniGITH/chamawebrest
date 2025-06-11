@@ -3,7 +3,7 @@ session_start();
 require_once 'inc/connect.php';
 
 if (!isset($_SESSION['user_id'])) {
-    header('Location: index.html');
+    header('Location: index.php');
     exit;
 }
 
@@ -30,10 +30,10 @@ $teams = $stmtTeams->fetchAll(PDO::FETCH_ASSOC);
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Abrir Novo Chamado</title>
-  <link rel="stylesheet" href="/public/css/style.css" />
-  <link rel="stylesheet" href="/public/css/animations.css" />
-  <link rel="stylesheet" href="/public/css/enhanced.css" />
-  <link rel="stylesheet" href="/public/css/theme.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/animations.css" />
+  <link rel="stylesheet" href="/css/enhanced.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
 </head>
 <body>
   <header>

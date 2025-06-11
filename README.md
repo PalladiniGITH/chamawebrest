@@ -9,7 +9,7 @@ Este projeto demonstra uma arquitetura simples de microserviços em PHP. Os serv
 - **stats**: fornece estatísticas agregadas usadas na página de relatórios.
 - **db**: banco de dados MySQL compartilhado entre os serviços.
 - **shared/connect.php**: script único de conexão ao banco utilizado pelos serviços.
-- **public/**: arquivos PHP e recursos estáticos do portal web.
+- **front-end**: arquivos PHP e recursos estáticos servidos na raiz do projeto.
 
 ## Executando
 
@@ -23,7 +23,7 @@ Credenciais padrão: `admin@sistema.com` / `admin123` (armazenada como hash SHA-
 docker-compose up --build
 ```
 
-O serviço **web** utiliza o diretório do projeto como DocumentRoot. Um `index.php` na raiz redireciona para `public/index.html`, onde ficam os arquivos HTML e JavaScript.
+O serviço **web** utiliza o diretório do projeto como DocumentRoot. O arquivo `index.php` exibe a página de login.
 
 O portal web pode ser acessado em `http://localhost:8080`.
 O API Gateway estará em `http://localhost:8081` e fará a mediação das chamadas para os demais serviços.
@@ -31,7 +31,7 @@ O contêiner `web` possui um certificado autoassinado configurado no Apache,
 permitindo acesso seguro em `https://localhost:8443`. O navegador exibirá um aviso
 de conexão não segura; aceite o risco para prosseguir nos testes locais.
 
-Para fazer login utilize `http://localhost:8080/` ou `https://localhost:8443/`. Qualquer tentativa de acessar `public/login.php` é redirecionada automaticamente para `login.php` na raiz.
+Para fazer login utilize `http://localhost:8080/` ou `https://localhost:8443/`.
 
 ## Endpoints
 
