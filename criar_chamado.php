@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../inc/connect.php';
+require_once 'inc/connect.php';
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: index.html');

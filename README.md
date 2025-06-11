@@ -24,7 +24,7 @@ Credenciais padrão: `admin@sistema.com` / `admin123` (armazenada como hash SHA-
 docker-compose up --build
 ```
 
-O Apache do serviço **web** utiliza a pasta `public/` como DocumentRoot. Todas as páginas PHP e arquivos estáticos ficam nesse diretório.
+O serviço **web** utiliza o diretório do projeto como DocumentRoot. Um `index.php` na raiz redireciona para `public/index.html`, onde ficam os arquivos HTML e JavaScript.
 
 O portal web pode ser acessado em `http://localhost:8080`.
 O API Gateway estará em `http://localhost:8081` e fará a mediação das chamadas para os demais serviços.

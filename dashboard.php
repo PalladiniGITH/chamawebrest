@@ -31,7 +31,7 @@ $tickets = json_decode($response, true);
 if (!is_array($tickets)) $tickets = [];
 
 // Buscar equipes (ainda direto do banco)
-require_once '../inc/connect.php';
+require_once 'inc/connect.php';
 if ($role !== 'usuario') {
     $stmtTeams = $pdo->query("SELECT * FROM teams ORDER BY nome");
     $teams = $stmtTeams->fetchAll(PDO::FETCH_ASSOC);

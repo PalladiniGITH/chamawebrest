@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once '../inc/connect.php';
-require_once '../shared/log.php';
+require_once 'inc/connect.php';
+require_once 'shared/log.php';
 
 $email = strtolower(trim($_POST['email'] ?? ''));
 $senha = $_POST['senha'] ?? '';

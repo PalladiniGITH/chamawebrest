@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../../auth_token.php';
+require_once '../auth_token.php';
 
 if (!isset($_SESSION['user_id'])) {
     http_response_code(401);
