@@ -31,10 +31,10 @@ if (isset($_POST['email'])) {
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Recuperar Senha</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/animations.css" />
-  <link rel="stylesheet" href="css/enhanced.css" />
-  <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="/public/css/style.css" />
+  <link rel="stylesheet" href="/public/css/animations.css" />
+  <link rel="stylesheet" href="/public/css/enhanced.css" />
+  <link rel="stylesheet" href="/public/css/theme.css" />
 </head>
 <body>
     <h1>Recuperar Senha</h1>
