@@ -34,5 +34,3 @@ function jwt_decode(string $token, string $secret = JWT_SECRET) {
     if (isset($payload['exp']) && time() > $payload['exp']) return false;
     return $payload;
 }
-?>
-
