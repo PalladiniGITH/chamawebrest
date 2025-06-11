@@ -1,5 +1,5 @@
 <?php
-require_once 'vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
@@ -9,7 +9,7 @@ class CognitoAuth {
     private $client;
 
     public function __construct() {
-        $this->config = require 'inc/cognito_config.php';
+        $this->config = require __DIR__ . '/cognito_config.php';
         $this->config = $this->config['cognito'];
         $this->client = new Client();
     }
