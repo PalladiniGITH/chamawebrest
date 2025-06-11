@@ -6,7 +6,6 @@ require_once 'auth_token.php';
 
 $email = strtolower(trim($_POST['email'] ?? ''));
 $senha = $_POST['senha'] ?? '';
-$senhaHash = hash('sha256', $senha);
 
 try {
     $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email AND auth_provider = 'local' AND blocked = 0 LIMIT 1");
@@ -15,7 +14,7 @@ try {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user) {
-        if (hash_equals($user['senha'], $senhaHash)) {
+        if (password_verify($senha, $user['senha'])) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['role']    = $user['role'];
             $_SESSION['nome']    = $user['nome'];
