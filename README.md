@@ -8,7 +8,6 @@ Este projeto demonstra uma arquitetura simples de microserviços em PHP. Os serv
 - **tickets**: responsável pelo gerenciamento de chamados.
 - **stats**: fornece estatísticas agregadas usadas na página de relatórios.
 - **db**: banco de dados MySQL compartilhado entre os serviços.
-- **nginx**: proxy reverso com HTTPS que expõe o portal e o gateway.
 - **shared/connect.php**: script único de conexão ao banco utilizado pelos serviços.
 - **public/**: arquivos PHP e recursos estáticos do portal web.
 
@@ -28,13 +27,9 @@ O serviço **web** utiliza o diretório do projeto como DocumentRoot. Um `index.
 
 O portal web pode ser acessado em `http://localhost:8080`.
 O API Gateway estará em `http://localhost:8081` e fará a mediação das chamadas para os demais serviços.
-Para acesso seguro via HTTPS, um contêiner Nginx é iniciado
-automaticamente. Ele expõe o portal e o gateway em `https://localhost:8443`
-(certificado autoassinado) e também atende em `http://localhost:8084` apenas
-para redirecionar para HTTPS. Se você enviar uma requisição HTTP diretamente
-para a porta 8443 o resultado será "400 Bad Request" porque essa porta aceita
-somente HTTPS.
-Observe que o certificado é autoassinado. O navegador exibirá um aviso de "conexão não segura". Aceite o risco ou adicione uma exceção para prosseguir nos testes locais.
+O contêiner `web` possui um certificado autoassinado configurado no Apache,
+permitindo acesso seguro em `https://localhost:8443`. O navegador exibirá um aviso
+de conexão não segura; aceite o risco para prosseguir nos testes locais.
 
 Para fazer login utilize `http://localhost:8080/` ou `https://localhost:8443/`. Qualquer tentativa de acessar `public/login.php` é redirecionada automaticamente para `login.php` na raiz.
 
@@ -76,7 +71,6 @@ docker build -t web:latest -f Dockerfile .
 docker build -t gateway:latest -f services/gateway/Dockerfile .
 docker build -t tickets:latest -f services/tickets/Dockerfile .
 docker build -t stats:latest -f services/stats/Dockerfile .
-docker build -t nginx-proxy:latest -f nginx/Dockerfile nginx/
 # ou simplesmente
 docker-compose build
 ```
@@ -88,7 +82,6 @@ minikube image load web:latest
 minikube image load gateway:latest
 minikube image load tickets:latest
 minikube image load stats:latest
-minikube image load nginx-proxy:latest
 ```
 
 Em seguida aplique os arquivos:
@@ -97,27 +90,24 @@ Em seguida aplique os arquivos:
 kubectl apply -f k8s/
 ```
 
-Isso criará as instâncias `web`, `gateway`, `tickets`, `stats`, `db`, `phpmyadmin` e `nginx-proxy`. O banco de dados será populado pelo script `script_sql.sql` via ConfigMap.
-O portal web e o gateway são expostos via NodePort (`30080` e `30081`), enquanto o proxy oferece HTTP em `30480` (redirecionando) e HTTPS em `30443`. Para descobrir os endereços no Minikube, execute:
+Isso criará as instâncias `web`, `gateway`, `tickets`, `stats`, `db` e `phpmyadmin`. O banco de dados será populado pelo script `script_sql.sql` via ConfigMap.
+O portal web é exposto via NodePort nas portas `30080` (HTTP) e `30443` (HTTPS). O gateway usa a porta `30081`. Para descobrir os endereços no Minikube, execute:
 
 ```bash
 minikube service web
 minikube service gateway
-minikube service nginx-proxy
 ```
 
-O `minikube service` sempre imprime um URL começando com `http://`. Para o proxy,
-substitua manualmente por `https://` se estiver usando a porta 30443.
+
 
 Ou encaminhe a porta manualmente:
 
 ```bash
 kubectl port-forward service/web 8080:80
 kubectl port-forward service/gateway 8081:80
-kubectl port-forward service/nginx-proxy 8443:443
-kubectl port-forward service/nginx-proxy 8084:80
+kubectl port-forward service/web 8443:443
 ```
-Depois acesse `http://localhost:8080` para o portal web, `http://localhost:8081` para o gateway ou `https://localhost:8443` através do proxy (HTTP em `http://localhost:8084` será redirecionado).
+Depois acesse `http://localhost:8080` para o portal web, `http://localhost:8081` para o gateway ou `https://localhost:8443` para conexão segura.
 
 Se algum pod ficar em `ImagePullBackOff`, verifique se as imagens estão disponíveis no Minikube com `minikube image ls`. Os manifestos definem `imagePullPolicy: Never` justamente para usar as imagens locais. Caso faltem, execute novamente `docker-compose build` e `minikube image load <nome>:latest` para cada serviço.
 
