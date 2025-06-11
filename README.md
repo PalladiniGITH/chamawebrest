@@ -36,6 +36,8 @@ para a porta 8443 o resultado será "400 Bad Request" porque essa porta aceita
 somente HTTPS.
 Observe que o certificado é autoassinado. O navegador exibirá um aviso de "conexão não segura". Aceite o risco ou adicione uma exceção para prosseguir nos testes locais.
 
+Para fazer login utilize `http://localhost:8080/` ou `https://localhost:8443/`. Qualquer tentativa de acessar `public/login.php` é redirecionada automaticamente para `login.php` na raiz.
+
 ## Endpoints
 
  Ao acessar o endereço acima, você verá uma mensagem com os caminhos disponíveis.
