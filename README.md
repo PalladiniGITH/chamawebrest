@@ -49,6 +49,8 @@ Para acompanhar as requisições encaminhadas pelo gateway, execute:
 ```bash
 docker-compose logs -f gateway
 ```
+Se estiver rodando via Kubernetes, use `kubectl logs deployment/gateway` para ver
+as mesmas mensagens.
 
 Cada requisição gera uma linha de log indicando o método, a rota recebida e o serviço interno escolhido. Você também pode acessar `http://localhost:8081/` e verificar se a mensagem JSON apresenta os caminhos `/tickets` e `/stats`.
 

@@ -31,6 +31,7 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, [
 ]);
 curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
 $response = curl_exec($ch);
+$curl_err = curl_error($ch);
 $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 curl_close($ch);
 
@@ -38,6 +39,10 @@ if ($http_code === 200) {
     echo json_encode(['success' => true]);
 } else {
     http_response_code(500);
-    echo json_encode(['error' => 'Falha ao criar chamado', 'response' => $response]);
+    $msg = 'Falha ao criar chamado';
+    if ($curl_err) {
+        $msg .= ': ' . $curl_err;
+    }
+    echo json_encode(['error' => $msg, 'response' => $response, 'code' => $http_code]);
 }
 ?>
