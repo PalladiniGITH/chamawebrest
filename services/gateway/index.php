@@ -46,6 +46,9 @@ $httpCode = 500;
 if (isset($http_response_header[0]) && preg_match('#HTTP/\d+\.\d+\s+(\d+)#', $http_response_header[0], $matches)) {
     $httpCode = (int)$matches[1];
 }
+// Registrar o status retornado pelo microserviço
+$log = sprintf("[%s] resposta %d\n", date('c'), $httpCode);
+file_put_contents('php://stdout', $log, FILE_APPEND);
 http_response_code($httpCode);
 echo $response;
 ?>

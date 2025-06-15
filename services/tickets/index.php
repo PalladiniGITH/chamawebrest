@@ -89,6 +89,8 @@ switch ($method) {
                 echo json_encode(["message" => "Chamado criado com sucesso"]);
             } else {
                 http_response_code(500);
+                $info = $stmt->errorInfo();
+                error_log('Falha ao inserir ticket: ' . json_encode($info));
                 echo json_encode(["error" => "Erro ao inserir no banco"]);
             }
         } catch (PDOException $e) {
