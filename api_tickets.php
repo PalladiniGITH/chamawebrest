@@ -1,6 +1,5 @@
 <?php 
 session_start();
-require_once 'inc/connect.php';
 require_once 'auth_token.php';
 
 // Verificar se o usuário está autenticado
@@ -20,6 +19,7 @@ $headers = [
 
 // Construir URL base da API via gateway
 $apiUrl = 'http://gateway:80/tickets';
+$method = $_SERVER['REQUEST_METHOD'];
 
 // Montar query string com filtros
 $queryParams = [];
@@ -38,6 +38,25 @@ if (!empty($queryParams)) {
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $apiUrl);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+if ($method === 'POST') {
+    $data = [
+        'titulo' => $_POST['titulo'] ?? '',
+        'descricao' => $_POST['descricao'] ?? '',
+        'categoria_id' => isset($_POST['categoria_id']) && $_POST['categoria_id'] !== '' ? (int)$_POST['categoria_id'] : null,
+        'servico_impactado' => $_POST['servico'] ?? '',
+        'tipo' => $_POST['tipo'] ?? 'Incidente',
+        'prioridade' => $_POST['prioridade'] ?? 'Baixo',
+        'risco' => $_POST['risco'] ?? 'Baixo',
+        'user_id' => $user_id,
+        'assigned_to' => isset($_POST['assigned_to']) && $_POST['assigned_to'] !== '' ? (int)$_POST['assigned_to'] : null,
+        'assigned_team_id' => isset($_POST['assigned_team']) && $_POST['assigned_team'] !== '' ? (int)$_POST['assigned_team'] : null
+    ];
+    $headers[] = 'Content-Type: application/json';
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+}
+
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
 $response = curl_exec($ch);
@@ -53,4 +72,5 @@ if (curl_errno($ch)) {
 curl_close($ch);
 
 header('Content-Type: application/json');
+http_response_code($httpCode);
 echo $response;

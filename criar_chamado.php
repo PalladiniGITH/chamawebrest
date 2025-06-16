@@ -223,7 +223,7 @@ $teams = $stmtTeams->fetchAll(PDO::FETCH_ASSOC);
         document.getElementById('submit-button').innerHTML = '<span class="spinner"></span> Enviando...';
 
         const formData = new FormData(form);
-        fetch('api/create_ticket.php', {
+        fetch('api_tickets.php', {
           method: 'POST',
           credentials: 'same-origin',
           body: formData

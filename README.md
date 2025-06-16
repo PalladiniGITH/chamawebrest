@@ -40,7 +40,7 @@ Para fazer login utilize `http://localhost:8080/` ou `https://localhost:8443/`.
  - `http://localhost:8081/tickets` - API de gerenciamento de chamados
  - `http://localhost:8081/stats` - API de estatísticas para o relatório
    (também acessíveis via HTTPS em `https://localhost:8443/api/...`)
-- `api/create_ticket.php` - proxy que envia o formulario de novo chamado ao gateway, evitando problemas de CORS.
+ - `api_tickets.php` - endpoint usado pelo formulário para criar e listar chamados através do gateway
 
 ## Verificando o gateway
 
