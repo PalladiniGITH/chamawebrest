@@ -2,7 +2,7 @@
 header("Content-Type: application/json");
 require_once 'inc/connect.php';
 require_once 'auth_token.php';
-require_once '../shared/log.php';
+require_once __DIR__ . '/shared/log.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
 $id = $_GET['id'] ?? null;
