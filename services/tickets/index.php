@@ -66,29 +66,34 @@ switch ($method) {
             }
         }
 
-        $stmt = $pdo->prepare("INSERT INTO tickets 
-            (titulo, descricao, categoria_id, servico_impactado, tipo, prioridade, risco, user_id, assigned_to, assigned_team_id, data_abertura) 
-            VALUES 
-            (:titulo, :descricao, :categoria_id, :servico, :tipo, :prioridade, :risco, :user_id, :assigned_to, :assigned_team_id, NOW())");
+        try {
+            $stmt = $pdo->prepare("INSERT INTO tickets
+                (titulo, descricao, categoria_id, servico_impactado, tipo, prioridade, risco, user_id, assigned_to, assigned_team_id, data_abertura)
+                VALUES
+                (:titulo, :descricao, :categoria_id, :servico, :tipo, :prioridade, :risco, :user_id, :assigned_to, :assigned_team_id, NOW())");
 
-        $ok = $stmt->execute([
-            ':titulo' => $data['titulo'],
-            ':descricao' => $data['descricao'],
-            ':categoria_id' => $data['categoria_id'] ?? null,
-            ':servico' => $data['servico_impactado'] ?? '',
-            ':tipo' => $data['tipo'],
-            ':prioridade' => $data['prioridade'],
-            ':risco' => $data['risco'],
-            ':user_id' => $data['user_id'],
-            ':assigned_to' => !empty($data['assigned_to']) ? $data['assigned_to'] : null,
-            ':assigned_team_id' => !empty($data['assigned_team_id']) ? $data['assigned_team_id'] : null
-        ]);
+            $ok = $stmt->execute([
+                ':titulo' => $data['titulo'],
+                ':descricao' => $data['descricao'],
+                ':categoria_id' => $data['categoria_id'] ?? null,
+                ':servico' => $data['servico_impactado'] ?? '',
+                ':tipo' => $data['tipo'],
+                ':prioridade' => $data['prioridade'],
+                ':risco' => $data['risco'],
+                ':user_id' => $data['user_id'],
+                ':assigned_to' => !empty($data['assigned_to']) ? $data['assigned_to'] : null,
+                ':assigned_team_id' => !empty($data['assigned_team_id']) ? $data['assigned_team_id'] : null
+            ]);
 
-        if ($ok) {
-            echo json_encode(["message" => "Chamado criado com sucesso"]);
-        } else {
+            if ($ok) {
+                echo json_encode(["message" => "Chamado criado com sucesso"]);
+            } else {
+                http_response_code(500);
+                echo json_encode(["error" => "Erro ao inserir no banco"]);
+            }
+        } catch (PDOException $e) {
             http_response_code(500);
-            echo json_encode(["error" => "Erro ao inserir no banco"]);
+            echo json_encode(["error" => $e->getMessage()]);
         }
         break;
 

@@ -43,6 +43,8 @@ if ($http_code === 200) {
     if ($curl_err) {
         $msg .= ': ' . $curl_err;
     }
+    // Log detalhado para depurar problemas de criação de tickets
+    error_log("Ticket API HTTP $http_code - $msg - Response: $response");
     echo json_encode(['error' => $msg, 'response' => $response, 'code' => $http_code]);
 }
 ?>
