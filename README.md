@@ -17,7 +17,7 @@ Utilize o `docker-compose` para subir todos os serviços. O script `script_sql.s
 será executado automaticamente no primeiro start do banco, populando a tabela de
 exemplo com um usuário administrador.
 
-Credenciais padrão: `admin@sistema.com` / `admin123` (armazenada como hash gerado com `password_hash`).
+Credenciais padrão: `admin@sistema.com` / `admin123`. A senha é gravada no banco como hash `bcrypt`, mas o login aceita também registros antigos em SHA-256 ou texto simples.
 
 ```bash
 docker-compose up --build
