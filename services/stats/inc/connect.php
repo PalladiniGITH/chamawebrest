@@ -1,6 +1,12 @@
 <?php
-// Include the shared connection script. The shared directory is copied to
-// /app/shared within the container, so we ascend one level from this file and
-// then include it.
-require_once __DIR__ . '/../shared/connect.php';
+// Include the shared connection script. Within the container the shared folder
+// lives at /app/shared, so from this directory we go one level up. When running
+// the service directly from the repository the structure is services/stats/inc/
+// which requires going two directories up instead.
+$shared = __DIR__ . '/../shared/connect.php';
+if (!file_exists($shared)) {
+    $shared = __DIR__ . '/../../shared/connect.php';
+}
+require_once $shared;
+
 

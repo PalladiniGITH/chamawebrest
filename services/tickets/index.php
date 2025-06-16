@@ -7,9 +7,13 @@ require_once 'auth_token.php';
 // file lives one level above this script. Check both paths so the service works
 // in either scenario.
 if (file_exists(__DIR__ . '/shared/log.php')) {
+    // When running inside the container the shared directory resides directly
+    // under /app
     require_once __DIR__ . '/shared/log.php';
 } else {
-    require_once __DIR__ . '/../shared/log.php';
+    // When executed from the repository the structure is services/tickets/, so
+    // the shared folder is two directories up
+    require_once __DIR__ . '/../../shared/log.php';
 }
 
 $method = $_SERVER['REQUEST_METHOD'];

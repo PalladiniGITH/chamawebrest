@@ -41,3 +41,4 @@ RUN if [ -f "composer.json" ]; then composer install --no-interaction; fi
 WORKDIR /var/www/html
 
 EXPOSE 80 443
+
