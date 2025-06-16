@@ -1,8 +1,8 @@
 <?php
 session_start();
-require_once 'vendor/autoload.php';
-require_once 'inc/CognitoAuth.php';
-require_once 'inc/connect.php';
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/inc/CognitoAuth.php';
+require_once __DIR__ . '/inc/connect.php';
 require_once 'shared/log.php';
 
 if (!isset($_GET['code'])) {
@@ -69,3 +69,4 @@ registrarLog($pdo, 'LOGIN', 'Login via Cognito', $user['id']);
 header('Location: dashboard.php');
 exit;
 ?>
+
