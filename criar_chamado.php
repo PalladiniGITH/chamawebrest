@@ -225,6 +225,7 @@ $teams = $stmtTeams->fetchAll(PDO::FETCH_ASSOC);
         const formData = new FormData(form);
         fetch('api/create_ticket.php', {
           method: 'POST',
+          credentials: 'same-origin',
           body: formData
         })
         .then(resp => resp.json())

@@ -2,7 +2,7 @@
 // Proxy endpoint that forwards ticket creation to the ticket microservice via the gateway.
 // This keeps browser requests same-origin and allows session reuse.
 session_start();
-require_once "../auth_token.php";
+require_once __DIR__ . '/../auth_token.php';
 if (!isset($_SESSION['user_id'])) {
     http_response_code(401);
     echo json_encode(['error' => 'Não autorizado']);
@@ -34,17 +34,16 @@ $response = curl_exec($ch);
 $curl_err = curl_error($ch);
 $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 curl_close($ch);
-
 if ($http_code === 200) {
     echo json_encode(['success' => true]);
-} else {
-    http_response_code(500);
-    $msg = 'Falha ao criar chamado';
-    if ($curl_err) {
-        $msg .= ': ' . $curl_err;
-    }
-    // Log detalhado para depurar problemas de criação de tickets
-    error_log("Ticket API HTTP $http_code - $msg - Response: $response");
-    echo json_encode(['error' => $msg, 'response' => $response, 'code' => $http_code]);
+    return;
 }
-?>
+
+http_response_code(500);
+$msg = 'Falha ao criar chamado';
+if ($curl_err) {
+    $msg .= ': ' . $curl_err;
+}
+error_log("Ticket API HTTP $http_code - $msg - Response: $response");
+echo json_encode(['error' => $msg, 'response' => $response, 'code' => $http_code]);
+
