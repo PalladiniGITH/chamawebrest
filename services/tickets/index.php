@@ -2,7 +2,15 @@
 header("Content-Type: application/json");
 require_once 'inc/connect.php';
 require_once 'auth_token.php';
-require_once __DIR__ . '/shared/log.php';
+// Include the shared logger. When running inside the container the shared folder
+// is placed directly under /app, but when executing from the repository the
+// file lives one level above this script. Check both paths so the service works
+// in either scenario.
+if (file_exists(__DIR__ . '/shared/log.php')) {
+    require_once __DIR__ . '/shared/log.php';
+} else {
+    require_once __DIR__ . '/../shared/log.php';
+}
 
 $method = $_SERVER['REQUEST_METHOD'];
 $id = $_GET['id'] ?? null;
