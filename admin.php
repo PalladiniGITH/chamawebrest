@@ -1,6 +1,14 @@
 <?php
 session_start();
 require_once 'inc/connect.php';
+require_once 'shared/log.php';
+
+function senhaValida($senha) {
+    return strlen($senha) >= 8 &&
+           preg_match('/[A-Z]/', $senha) &&
+           preg_match('/[a-z]/', $senha) &&
+           preg_match('/[0-9]/', $senha);
+}
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'administrador') {
     header('Location: index.php');
@@ -12,11 +20,18 @@ if (isset($_POST['acao']) && $_POST['acao'] === 'criar_usuario') {
     $nome  = $_POST['nome'] ?? '';
     $email = $_POST['email'] ?? '';
     $senha = $_POST['senha'] ?? '';
+    if (!senhaValida($senha)) {
+        $_SESSION['admin_message'] = 'Senha fraca: mínimo 8 caracteres com maiúsculas, minúsculas e números';
+        $_SESSION['admin_message_type'] = 'danger';
+        header('Location: admin.php');
+        exit;
+    }
     $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
     $role  = $_POST['role']  ?? 'usuario';
 
     $stmt = $pdo->prepare("INSERT INTO users (nome,email,senha,role) VALUES (:n,:e,:s,:r)");
     $stmt->execute(['n'=>$nome, 'e'=>$email, 's'=>$senhaHash, 'r'=>$role]);
+    registrarLog($pdo, 'CRIAR_USUARIO', 'Usuário criado: '.$email, $_SESSION['user_id']);
     
     // Mensagem de sucesso via sessão
     $_SESSION['admin_message'] = 'Usuário criado com sucesso!';

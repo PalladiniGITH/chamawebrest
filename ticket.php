@@ -70,9 +70,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!empty($_FILES['anexo']['name'])) {
             $arquivoTmp = $_FILES['anexo']['tmp_name'];
             $nomeArq = basename($_FILES['anexo']['name']);
-            $destino = 'uploads/' . uniqid() . '_' . $nomeArq;
-            if (move_uploaded_file($arquivoTmp, $destino)) {
-                $anexo = $destino;
+            $mime = mime_content_type($arquivoTmp);
+            $permitidos = ['image/jpeg','image/png','application/pdf'];
+            $maxBytes = 2 * 1024 * 1024; // 2MB
+            if (in_array($mime, $permitidos) && $_FILES['anexo']['size'] <= $maxBytes) {
+                $destino = 'uploads/' . uniqid() . '_' . preg_replace('/[^A-Za-z0-9_.-]/','', $nomeArq);
+                if (is_uploaded_file($arquivoTmp) && move_uploaded_file($arquivoTmp, $destino)) {
+                    $anexo = $destino;
+                }
             }
         }
 

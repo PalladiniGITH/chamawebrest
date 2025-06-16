@@ -65,6 +65,10 @@ Um script `backup_db.sh` está disponível para gerar backups da base MySQL. Voc
 
 Todos os acessos e ações relevantes são registrados na tabela `logs` do banco de dados, permitindo auditoria completa.
 
+As credenciais do banco podem ser fornecidas por variáveis de ambiente (`DB_HOST`, `DB_NAME`, `DB_USER`, `DB_PASS`). O `docker-compose.yml` já define valores padrão, mas você pode substituir exportando-as antes de subir os contêineres.
+
+O certificado TLS usado no ambiente local é autoassinado e serve apenas para testes. Em produção utilize certificados válidos e proteja os arquivos de configuração com um gerenciador de segredos.
+
 
 ## Kubernetes
 

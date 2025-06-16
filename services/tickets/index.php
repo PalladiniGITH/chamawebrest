@@ -2,6 +2,7 @@
 header("Content-Type: application/json");
 require_once 'inc/connect.php';
 require_once 'auth_token.php';
+require_once '../shared/log.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
 $id = $_GET['id'] ?? null;
@@ -86,6 +87,7 @@ switch ($method) {
             ]);
 
             if ($ok) {
+                registrarLog($pdo, 'CRIAR_TICKET', 'Ticket criado', $payload['id']);
                 echo json_encode(["message" => "Chamado criado com sucesso"]);
             } else {
                 http_response_code(500);
@@ -125,6 +127,7 @@ switch ($method) {
             ':estado' => $data['estado'],
             ':id' => $id
         ]);
+        registrarLog($pdo, 'ATUALIZA_TICKET', 'Ticket atualizado', $payload['id']);
         echo json_encode(["message" => "Chamado atualizado"]);
         break;
 
@@ -143,6 +146,7 @@ switch ($method) {
     $stmt = $pdo->prepare("DELETE FROM tickets WHERE id = ?");
     $stmt->execute([$id]);
 
+    registrarLog($pdo, 'DELETE_TICKET', 'Ticket excluído', $payload['id']);
     echo json_encode(["message" => "Chamado excluído"]);
     break;
 

@@ -7,6 +7,11 @@ services:
     ports:
       - "8080:80"
       - "8443:443"
+    environment:
+      DB_HOST: db
+      DB_NAME: chamaweb
+      DB_USER: root
+      DB_PASS: root
     depends_on:
       - gateway
 
@@ -17,6 +22,11 @@ services:
     image: gateway:latest
     ports:
       - "8081:80"
+    environment:
+      DB_HOST: db
+      DB_NAME: chamaweb
+      DB_USER: root
+      DB_PASS: root
     depends_on:
       - tickets
       - stats
@@ -26,6 +36,11 @@ services:
       context: .
       dockerfile: services/tickets/Dockerfile
     image: tickets:latest
+    environment:
+      DB_HOST: db
+      DB_NAME: chamaweb
+      DB_USER: root
+      DB_PASS: root
     depends_on:
       - db
 
@@ -34,6 +49,11 @@ services:
       context: .
       dockerfile: services/stats/Dockerfile
     image: stats:latest
+    environment:
+      DB_HOST: db
+      DB_NAME: chamaweb
+      DB_USER: root
+      DB_PASS: root
     depends_on:
       - db
 

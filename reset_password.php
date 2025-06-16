@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once 'inc/connect.php';
+require_once 'shared/log.php';
 
 if (isset($_POST['email'])) {
     // Em produção, gerar token, guardar em tabela, enviar e-mail com link
@@ -12,12 +13,12 @@ if (isset($_POST['email'])) {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user) {
-        // Exemplo simplificado: redefinir senha para "1234" (hash)
-        // Em produção, gere token e envie e-mail com link
-        $novaSenhaHash = password_hash('1234', PASSWORD_DEFAULT);
+        $nova = bin2hex(random_bytes(6));
+        $novaSenhaHash = password_hash($nova, PASSWORD_DEFAULT);
         $stmtUpd = $pdo->prepare("UPDATE users SET senha=:s WHERE id=:id");
         $stmtUpd->execute(['s'=>$novaSenhaHash, 'id'=>$user['id']]);
-        echo "Senha redefinida. <a href='index.php'>Fazer login</a>";
+        registrarLog($pdo, 'RESET_SENHA', 'Senha redefinida para usuario '.$email, $user['id']);
+        echo "Senha redefinida. Nova senha: <strong>{$nova}</strong>. \n<a href='index.php'>Fazer login</a>";
         exit;
     } else {
         echo "E-mail não encontrado. <a href='reset_password.php'>Tentar novamente</a>";
