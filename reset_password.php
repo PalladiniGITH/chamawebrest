@@ -12,11 +12,12 @@ if (isset($_POST['email'])) {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user) {
-        // Exemplo grosseiro: redefinir senha direto p/ "1234"
-        // Em real, geramos token, enviamos link com esse token, etc.
-        $stmtUpd = $pdo->prepare("UPDATE users SET senha='1234' WHERE id=:id");
-        $stmtUpd->execute(['id'=>$user['id']]);
-        echo "Senha redefinida para '1234'. <a href='index.html'>Fazer login</a>";
+        // Exemplo simplificado: redefinir senha para "1234" (hash)
+        // Em produção, gere token e envie e-mail com link
+        $novaSenhaHash = password_hash('1234', PASSWORD_DEFAULT);
+        $stmtUpd = $pdo->prepare("UPDATE users SET senha=:s WHERE id=:id");
+        $stmtUpd->execute(['s'=>$novaSenhaHash, 'id'=>$user['id']]);
+        echo "Senha redefinida. <a href='index.php'>Fazer login</a>";
         exit;
     } else {
         echo "E-mail não encontrado. <a href='reset_password.php'>Tentar novamente</a>";
@@ -30,10 +31,10 @@ if (isset($_POST['email'])) {
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Recuperar Senha</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/animations.css" />
-  <link rel="stylesheet" href="css/enhanced.css" />
-  <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/animations.css" />
+  <link rel="stylesheet" href="/css/enhanced.css" />
+  <link rel="stylesheet" href="/css/theme.css" />
 </head>
 <body>
     <h1>Recuperar Senha</h1>
@@ -42,6 +43,6 @@ if (isset($_POST['email'])) {
         <input type="email" name="email" required />
         <button type="submit">Recuperar</button>
     </form>
-    <p><a href="index.html">Voltar ao Login</a></p>
+    <p><a href="index.php">Voltar ao Login</a></p>
 </body>
 </html>

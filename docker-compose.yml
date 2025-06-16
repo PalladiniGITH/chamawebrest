@@ -3,10 +3,37 @@ version: '3.8'
 services:
   web:
     build: .
+    image: web:latest
     ports:
       - "8080:80"
-    volumes:
-      - .:/var/www/html
+      - "8443:443"
+    depends_on:
+      - gateway
+
+  gateway:
+    build:
+      context: .
+      dockerfile: services/gateway/Dockerfile
+    image: gateway:latest
+    ports:
+      - "8081:80"
+    depends_on:
+      - tickets
+      - stats
+
+  tickets:
+    build:
+      context: .
+      dockerfile: services/tickets/Dockerfile
+    image: tickets:latest
+    depends_on:
+      - db
+
+  stats:
+    build:
+      context: .
+      dockerfile: services/stats/Dockerfile
+    image: stats:latest
     depends_on:
       - db
 
@@ -22,15 +49,17 @@ services:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
+      - ./script_sql.sql:/docker-entrypoint-initdb.d/init.sql:ro
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     restart: always
     ports:
-      - "8081:80"
+      - "8082:80"
     environment:
       PMA_HOST: db
       MYSQL_ROOT_PASSWORD: root
+
 
 volumes:
   db_data:

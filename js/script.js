@@ -57,7 +57,7 @@ function setupDashboardFeatures() {
 
         fetch('api_chamados_rest.php?' + params.toString(), {
             headers: {
-                'Authorization': 'Bearer admin123'
+                'Authorization': 'Bearer ' + (window.JWT_TOKEN || '')
             }
         })
             .then(response => {
