@@ -12,14 +12,14 @@ if (!isset($_SESSION['user_id'])) {
 $data = [
     'titulo' => $_POST['titulo'] ?? '',
     'descricao' => $_POST['descricao'] ?? '',
-    'categoria_id' => $_POST['categoria_id'] ?? null,
+    'categoria_id' => isset($_POST['categoria_id']) && $_POST['categoria_id'] !== '' ? (int)$_POST['categoria_id'] : null,
     'servico_impactado' => $_POST['servico'] ?? '',
     'tipo' => $_POST['tipo'] ?? 'Incidente',
     'prioridade' => $_POST['prioridade'] ?? 'Baixo',
     'risco' => $_POST['risco'] ?? 'Baixo',
     'user_id' => $_SESSION['user_id'],
-    'assigned_to' => $_POST['assigned_to'] ?? null,
-    'assigned_team_id' => $_POST['assigned_team'] ?? null
+    'assigned_to' => isset($_POST['assigned_to']) && $_POST['assigned_to'] !== '' ? (int)$_POST['assigned_to'] : null,
+    'assigned_team_id' => isset($_POST['assigned_team']) && $_POST['assigned_team'] !== '' ? (int)$_POST['assigned_team'] : null
 ];
 
 $ch = curl_init('http://gateway:80/tickets');

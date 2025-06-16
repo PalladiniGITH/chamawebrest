@@ -88,14 +88,14 @@ switch ($method) {
             $ok = $stmt->execute([
                 ':titulo' => $data['titulo'],
                 ':descricao' => $data['descricao'],
-                ':categoria_id' => $data['categoria_id'] ?? null,
+                ':categoria_id' => isset($data['categoria_id']) && $data['categoria_id'] !== '' ? (int)$data['categoria_id'] : null,
                 ':servico' => $data['servico_impactado'] ?? '',
                 ':tipo' => $data['tipo'],
                 ':prioridade' => $data['prioridade'],
                 ':risco' => $data['risco'],
                 ':user_id' => $data['user_id'],
-                ':assigned_to' => !empty($data['assigned_to']) ? $data['assigned_to'] : null,
-                ':assigned_team_id' => !empty($data['assigned_team_id']) ? $data['assigned_team_id'] : null
+                ':assigned_to' => isset($data['assigned_to']) && $data['assigned_to'] !== '' ? (int)$data['assigned_to'] : null,
+                ':assigned_team_id' => isset($data['assigned_team_id']) && $data['assigned_team_id'] !== '' ? (int)$data['assigned_team_id'] : null
             ]);
 
             if ($ok) {
