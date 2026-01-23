@@ -1,4 +1,4 @@
-FROM php:8.4.8RC1-apache
+FROM php:8.5.2-apache
 
 # Apache servirá arquivos a partir do diretório padrão
 ENV APACHE_DOCUMENT_ROOT /var/www/html
